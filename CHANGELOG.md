@@ -1,4 +1,9 @@
 # Changelog
+
+## v1
+
+**Full Changelog**: https://github.com/naik-aakash/autoplex/compare/...v1
+
 ## v0.1.1
 ### What's changed
 
