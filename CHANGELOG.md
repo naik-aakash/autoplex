@@ -1,4 +1,10 @@
 # Changelog
+
+### What's changed
+
+- Nothing
+
+**Full Changelog**: https://github.com/naik-aakash/autoplex/commits/v4
 ## v0.1.1
 ### What's changed
 
