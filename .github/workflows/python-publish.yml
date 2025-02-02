@@ -38,17 +38,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Fetch Latest Release Notes
-        id: get_release_notes
-        run: echo "::set-output name=notes::$(gh release view ${{ github.event.release.tag_name }} --json body -q .body)"
+      - name: Fetch Version Tag & Release Notes
+        id: get_release_info
+        run: |
+          echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          echo "NOTES<<EOF" >> $GITHUB_ENV
+          gh release view ${{ github.event.release.tag_name }} --json body -q .body >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update CHANGELOG.md
+      - name: Insert Version Tag & Release Notes Below `# Changelog`
         run: |
-          awk -v notes="${{ steps.get_release_notes.outputs.notes }}" 'NR==1 {print; print notes "\n"; next} 1' CHANGELOG.md > temp.md && mv temp.md CHANGELOG.md
-
-
+          { echo "# Changelog"; echo; echo "## $VERSION"; echo; echo "$NOTES"; echo; tail -n +2 CHANGELOG.md; } > temp.md && mv temp.md CHANGELOG.md
+          
       - name: Create Pull Request to push updated CHANGELOG.md
         uses: peter-evans/create-pull-request@v7
         with:
