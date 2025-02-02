@@ -46,11 +46,8 @@ jobs:
 
       - name: Update CHANGELOG.md
         run: |
-          # Define the new changelog entry
-          NEW_ENTRY="## ${{ github.event.release.tag_name }}\n\n${{ steps.get_release_notes.outputs.notes }}\n\n**Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ github.event.release.previous_tag_name }}...${{ github.event.release.tag_name }}\n\n"
+          awk -v notes="${{ steps.get_release_notes.outputs.notes }}" 'NR==1 {print; print notes "\n"; next} 1' CHANGELOG.md > temp.md && mv temp.md CHANGELOG.md
 
-          # Insert new entry below "# Changelog"
-          awk -v new_entry="$NEW_ENTRY" 'NR==1 {print; print new_entry; next} 1' CHANGELOG.md > temp.md && mv temp.md CHANGELOG.md
 
       - name: Create Pull Request to push updated CHANGELOG.md
         uses: peter-evans/create-pull-request@v7
