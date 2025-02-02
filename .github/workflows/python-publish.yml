@@ -48,17 +48,16 @@ jobs:
           echo "NOTES<<EOF" >> $GITHUB_ENV
           PRS=$(gh api repos/${{ github.repository }}/pulls --jq '.[] | select(.merged_at != null) | {title: .title, url: .html_url, labels: [.labels[].name]}' --paginate)
 
-          FEATURES=$(echo "$PRS" | jq -r 'select(.labels | index("feature")) | "- \(.title) ([#\(.url | split("/")[-1])](\(.url)))"' || true)
+          ENHANCEMENTS=$(echo "$PRS" | jq -r 'select(.labels | index("enhancement")) | "- \(.title) ([#\(.url | split("/")[-1])](\(.url)))"' || true)
           BUG_FIXES=$(echo "$PRS" | jq -r 'select(.labels | index("bug")) | "- \(.title) ([#\(.url | split("/")[-1])](\(.url)))"' || true)
+          HOUSEKEEPING=$(echo "$PRS" | jq -r 'select(.labels | index("housekeeping")) | "- \(.title) ([#\(.url | split("/")[-1])](\(.url)))"' || true)
           DOCS=$(echo "$PRS" | jq -r 'select(.labels | index("documentation")) | "- \(.title) ([#\(.url | split("/")[-1])](\(.url)))"' || true)
+          DEPENDENCIES=$(echo "$PRS" | jq -r 'select(.labels | index("dependencies")) | "- \(.title) ([#\(.url | split("/")[-1])](\(.url)))"' || true)
           OTHER=$(echo "$PRS" | jq -r 'select(.labels | length == 0) | "- \(.title) ([#\(.url | split("/")[-1])](\(.url)))"' || true)
 
-          echo "## $VERSION" >> $GITHUB_ENV
-          echo "" >> $GITHUB_ENV
-          
-          if [ ! -z "$FEATURES" ]; then
-            echo "### 🚀 Features" >> $GITHUB_ENV
-            echo "$FEATURES" >> $GITHUB_ENV
+          if [ ! -z "$ENHANCEMENTS" ]; then
+            echo "### 🚀 Enhancements" >> $GITHUB_ENV
+            echo "$ENHANCEMENTS" >> $GITHUB_ENV
             echo "" >> $GITHUB_ENV
           fi
           
@@ -67,10 +66,22 @@ jobs:
             echo "$BUG_FIXES" >> $GITHUB_ENV
             echo "" >> $GITHUB_ENV
           fi
+
+          if [ ! -z "$HOUSEKEEPING" ]; then
+            echo "### 🧹 Housekeeping" >> $GITHUB_ENV
+            echo "$HOUSEKEEPING" >> $GITHUB_ENV
+            echo "" >> $GITHUB_ENV
+          fi
           
           if [ ! -z "$DOCS" ]; then
             echo "### 📚 Documentation" >> $GITHUB_ENV
             echo "$DOCS" >> $GITHUB_ENV
+            echo "" >> $GITHUB_ENV
+          fi
+
+          if [ ! -z "$DEPENDENCIES" ]; then
+            echo "### 📦 Dependencies" >> $GITHUB_ENV
+            echo "$DEPENDENCIES" >> $GITHUB_ENV
             echo "" >> $GITHUB_ENV
           fi
           
@@ -86,15 +97,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update GitHub Release Notes
+      - name: Update GitHub Release Notes (Without Version Header)
         run: |
           gh release edit $VERSION --notes "$NOTES"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Insert Release Notes into CHANGELOG.md
+      - name: Insert Release Notes into CHANGELOG.md (With Version Header)
         run: |
-          { echo "# Changelog"; echo; echo "$NOTES"; echo; tail -n +2 CHANGELOG.md; } > temp.md && mv temp.md CHANGELOG.md
+          { echo "# Changelog"; echo; echo "## $VERSION"; echo; echo "$NOTES"; echo; tail -n +2 CHANGELOG.md; } > temp.md && mv temp.md CHANGELOG.md
           
       - name: Create Pull Request to push updated CHANGELOG.md
         uses: peter-evans/create-pull-request@v7
