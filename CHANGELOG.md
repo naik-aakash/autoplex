@@ -1,4 +1,13 @@
 # Changelog
+
+## v0.6
+
+### What's changed
+
+- See below
+
+**Full Changelog**: https://github.com/naik-aakash/autoplex/commits/v0.6
+
 ## v0.1.1
 ### What's changed
 
