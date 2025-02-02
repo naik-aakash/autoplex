@@ -54,7 +54,7 @@ jobs:
       - name: Create Pull Request to push updated CHANGELOG.md
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.ACTION_SECRET }}
+          #token: ${{ secrets.ACTION_SECRET }}
           commit-message: update CHANGELOG
           title: Update changelog with latest release notes
           body: Update CHANGELOG.md to reflect release changes
