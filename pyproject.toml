@@ -37,7 +37,7 @@ dependencies = [
      "torchdata==0.7.1",
      # quippy-ase support for py3.12 tracked in https://github.com/libAtoms/QUIP/issues/645
      "quippy-ase==0.9.14; python_version < '3.12'",
-     "torch==2.2.1",
+     "torch==2.5.1",
 ]
 
 [tool.setuptools.packages.find]
@@ -61,6 +61,10 @@ docs = [
     "sphinx-book-theme==1.1.0",
     "sphinxcontrib-mermaid",
 
+]
+workflow-managers = [
+    "FireWorks==2.0.4",
+    "jobflow-remote==0.1.5"
 ]
 strict = [
      "pymatgen==2024.11.13", #?
