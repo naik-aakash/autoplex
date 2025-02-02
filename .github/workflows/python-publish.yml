@@ -30,3 +30,33 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
+
+  update-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Fetch Latest Release Notes
+        id: get_release_notes
+        run: echo "::set-output name=notes::$(gh release view ${{ github.event.release.tag_name }} --json body -q .body)"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update CHANGELOG.md
+        run: |
+          echo -e "## ${{ github.event.release.tag_name }}\n\n${{ steps.get_release_notes.outputs.notes }}\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
+
+      - name: Debug - Print Updated CHANGELOG.md
+        run: cat CHANGELOG.md    
+
+      - name: Create Pull Request to push updated CHANGELOG.md
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.ACTION_SECRET }}
+          commit-message: update CHANGELOG
+          title: Update changelog with latest release notes
+          body: Update CHANGELOG.md to reflect release changes
+          branch: update-changelog
+          delete-branch: true
+          base: main
