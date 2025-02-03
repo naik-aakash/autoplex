@@ -1,4 +1,13 @@
 # Changelog
+
+## v4
+
+<!-- Release notes generated using configuration in .github/release.yml at update_dependencies -->
+
+
+
+**Full Changelog**: https://github.com/naik-aakash/autoplex/commits/v4
+
 ## v0.1.1
 ### What's changed
 
