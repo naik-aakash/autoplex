@@ -1,4 +1,19 @@
 # Changelog
+
+## v0.1.3
+
+<!-- Release notes generated using configuration in .github/release.yml at test_scm -->
+
+
+
+**Full Changelog**: https://github.com/naik-aakash/autoplex/compare/v0.1.2...v0.1.3
+
+
+## v0.1.2
+### Whats's changed
+
+* Test
+
 ## v0.1.1
 ### What's changed
 
