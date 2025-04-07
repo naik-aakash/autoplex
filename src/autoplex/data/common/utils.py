@@ -887,7 +887,7 @@ class ElementCollection:
 
     def get_number_of_species(self) -> int:
         """Return the number of unique species present among the atoms."""
-        return int(len(self.get_species()))
+        return len(self.get_species())
 
     def get_species_Z(self) -> str:
         """Return a formatted string of atomic numbers of the unique species."""
