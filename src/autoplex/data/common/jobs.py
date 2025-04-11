@@ -699,6 +699,7 @@ def preprocess_data(
     regularization: bool = False,
     retain_existing_sigma: bool = False,
     scheme: str = "linear-hull",
+    element_order: list | None = None,
     distillation: bool = False,
     force_max: float = 40,
     force_label: str = "REF_forces",
@@ -728,6 +729,12 @@ def preprocess_data(
         If set to True, existing sigma values for specific configurations will remain unchanged.
     scheme: str
         Scheme to use for regularization.
+    element_order:
+        List of atomic numbers in order of choice (e.g. [42, 16] for MoS2).
+        This value is useful when constructing high-dimensional convex hulls based on the
+        "volume-stoichiometry" scheme. Specially, if the dataset contains compounds with
+        different numbers of constituent elements (e.g., both binary and ternary structures),
+        this value must be explicitly set to ensure the convex hull is constructed consistently.
     distillation: bool
         If True, apply data distillation.
     force_max: float
@@ -787,6 +794,7 @@ def preprocess_data(
             reg_minmax=reg_minmax,
             isolated_atom_energies=isolated_atom_energies,
             scheme=scheme,
+            element_order=element_order,
             retain_existing_sigma=retain_existing_sigma,
         )
 
