@@ -55,6 +55,9 @@ jobs:
           sleep 300
           echo "Resuming workflow..."
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # ensure git tags are fetched for setuptools-scm
+    - uses: actions/checkout@v4
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
