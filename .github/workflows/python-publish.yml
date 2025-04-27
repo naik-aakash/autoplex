@@ -8,6 +8,7 @@
 
 name: Publish autoplex
 on:
+  workflow_dispatch:
   release:
     types: [published]
 
