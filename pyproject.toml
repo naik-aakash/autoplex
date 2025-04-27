@@ -38,7 +38,7 @@ dependencies = [
      "dgl<=2.2.0; sys.platform != 'linux'",
      "dgl<=2.4; sys.platform == 'linux'",
      "torchdata<=0.7.1; sys.platform != 'linux'",
-     "torchdata<=0.8.0; sys.platform == 'linux'"
+     "torchdata<=0.8.0; sys.platform == 'linux'",
      "torch<=2.2.0; sys.platform != 'linux'",
      "torch<=2.4.0; sys.platform == 'linux'",
      # quippy-ase support for py3.12 tracked in https://github.com/libAtoms/QUIP/issues/645
@@ -81,7 +81,7 @@ strict = [
      "dgl==2.2.0; sys.platform != 'linux'",
      "dgl==2.4; sys.platform == 'linux'",
      "torchdata==0.7.1; sys.platform != 'linux'",
-     "torchdata==0.8.0; sys.platform == 'linux'"
+     "torchdata==0.8.0; sys.platform == 'linux'",
      "torch==2.2.0; sys.platform != 'linux'",
      "torch==2.4.0; sys.platform == 'linux'",
      "nequip==0.6.1",
