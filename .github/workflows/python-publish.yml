@@ -8,6 +8,7 @@
 
 name: Publish autoplex
 on:
+  workflow_dispatch:
   release:
     types: [published]
 
@@ -54,6 +55,10 @@ jobs:
           echo "Wait for 5 minutes to merge PR..."
           sleep 300
           echo "Resuming workflow..."
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # ensure git tags are fetched for setuptools-scm
+        fetch-tags: true
     - uses: actions/checkout@v4
     - name: Set up Python
       uses: actions/setup-python@v4
