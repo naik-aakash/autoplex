@@ -60,7 +60,7 @@ docs = [
     "myst-nb==1.2.0",
     "sphinx-book-theme==1.1.0",
     "sphinxcontrib-mermaid",
-    "nbconvert==7.16.4",
+    "nbconvert==7.16.6",
 ]
 workflow-managers = [
     "FireWorks==2.0.4",
