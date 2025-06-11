@@ -988,7 +988,9 @@ def cur_select(
 
     num_workers = min(len(fatoms), os.cpu_count() or 1)
 
-    worker = partial(parallel_calc_descriptor_vec, selected_descriptor)
+    worker = partial(
+        parallel_calc_descriptor_vec, selected_descriptor=selected_descriptor
+    )
     with threadpool_limits(limits=1), Pool(processes=num_workers) as pool:
         # TODO: implement argument for number of cores throughout
         ats = pool.map(worker, fatoms)
