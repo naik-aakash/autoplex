@@ -6,6 +6,7 @@ import random
 import shutil
 import warnings
 from collections.abc import Iterable
+from functools import partial
 from itertools import chain
 from multiprocessing import Pool
 from pathlib import Path
@@ -26,6 +27,7 @@ from pymatgen.io.ase import AseAtomsAdaptor
 from quippy import descriptors
 from scipy.sparse.linalg import LinearOperator, svds
 from sklearn.model_selection import StratifiedShuffleSplit
+from threadpoolctl import threadpool_limits
 
 from autoplex.fitting.common.regularization import (
     calculate_hull_nd,
@@ -986,13 +988,12 @@ def cur_select(
 
     num_workers = min(len(fatoms), os.cpu_count() or 1)
 
-    with Pool(
-        processes=num_workers
-    ) as pool:  # TODO: implement argument for number of cores throughout
-        ats = pool.starmap(
-            parallel_calc_descriptor_vec,
-            [(atom, selected_descriptor) for atom in fatoms],
-        )
+    descriptor_worker = partial(
+        parallel_calc_descriptor_vec, selected_descriptor=selected_descriptor
+    )
+    with threadpool_limits(limits=1), Pool(processes=num_workers) as pool:
+        # TODO: implement argument for number of cores throughout
+        ats = pool.map(descriptor_worker, fatoms)
 
     if isinstance(ats, list) & (len(ats) != 0):
         at_descs = np.array([at.info["descriptor_vec"] for at in ats]).T
