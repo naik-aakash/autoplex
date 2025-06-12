@@ -1830,7 +1830,7 @@ def calculate_delta_2b(
 
 def compute_num_of_descriptor(atom: Atoms, nb: int, cutoff: float) -> list[float]:
     """
-    Calculate the number of pairwise and triplet within a cutoff distance for a given list of atoms.
+    Compute the number of two-body or three-body descriptors within a specified cutoff radius.
 
     Parameters
     ----------
@@ -1968,9 +1968,11 @@ def run_ase_gap(
     """
     gap_control = "Potential xml_label=" + extract_gap_label(xml_file)
     atoms = ase.io.read(data_path, index=":")
-    worker = partial(_compute_gap_energy, gap_control=gap_control, gap_label=xml_file)
+    eval_worker = partial(
+        _compute_gap_energy, gap_control=gap_control, gap_label=xml_file
+    )
     with threadpool_limits(limits=1), mp.Pool(processes=num_processes_fit) as pool:
-        atoms_eval = pool.map(worker, atoms)
+        atoms_eval = pool.map(eval_worker, atoms)
     ase.io.write(filename, atoms_eval, format="extxyz")
 
 

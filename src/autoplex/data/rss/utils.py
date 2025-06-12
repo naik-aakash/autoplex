@@ -627,7 +627,7 @@ def minimize_structures(
     for i, atom in enumerate(atoms):
         atom.info["unique_starting_index"] = iteration_index + f"{i+struct_start_index}"
 
-    worker = partial(
+    minimize_worker = partial(
         process_rss,
         mlip_type=mlip_type,
         mlip_path=mlip_path,
@@ -650,7 +650,7 @@ def minimize_structures(
     )
 
     with threadpool_limits(limits=1), Pool(processes=num_processes_rss) as pool:
-        results = pool.map(worker, atoms)
+        results = pool.map(minimize_worker, atoms)
 
     return list(results)
 
