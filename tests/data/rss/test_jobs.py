@@ -349,6 +349,15 @@ def test_output_from_scratch(memory_jobstore, clean_dir):
 
     responses = run_locally(job_rss, ensure_success=True, create_folders=True, store=memory_jobstore)
     assert len(read(job_rss.output.resolve(memory_jobstore), index=":")) == 3
+    
+    
+def test_output_from_scratch_wo_buildcell_option(memory_jobstore, clean_dir):
+    from ase.io import read
+    job_rss = RandomizedStructure(struct_number=3,
+                                  tag='Si').make()
+
+    responses = run_locally(job_rss, ensure_success=True, create_folders=True, store=memory_jobstore)
+    assert len(read(job_rss.output.resolve(memory_jobstore), index=":")) == 3
 
 
 def test_fragment_buildcell(test_dir, memory_jobstore, clean_dir):

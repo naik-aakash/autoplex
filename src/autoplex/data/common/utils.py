@@ -3,7 +3,6 @@
 import logging
 import os
 import random
-import shutil
 import warnings
 from collections.abc import Iterable
 from functools import partial
@@ -1644,7 +1643,10 @@ def handle_rss_trajectory(
         traj_dirs = list(set(traj_dirs))
         for dir_path in traj_dirs:
             if os.path.exists(dir_path) and os.path.isdir(dir_path):
-                shutil.rmtree(dir_path)
-                os.makedirs(dir_path)
+                for root, _, files in os.walk(dir_path):
+                    for name in files:
+                        if "RSS_relax_results" in name:
+                            file_path = os.path.join(root, name)
+                            os.remove(file_path)
 
     return atoms, pressures

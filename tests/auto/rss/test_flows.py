@@ -193,7 +193,7 @@ def test_mock_workflow(test_dir, mock_vasp, memory_jobstore, clean_dir):
                                   force_tol=0.6,
                                   stress_tol=0.6,
                                   Hookean_repul=False,
-                                  write_traj=True,
+                                  remove=True,
                                   num_processes_rss=4,
                                   device="cpu",
                                   stop_criterion=0.01,
@@ -343,13 +343,12 @@ def test_mock_workflow_multi_node(test_dir, mock_vasp, memory_jobstore, clean_di
                                              force_tol=0.6,
                                              stress_tol=0.6,
                                              Hookean_repul=False,
-                                             write_traj=True,
+                                             remove_traj_files=True,
                                              num_processes_rss=4,
                                              device="cpu",
                                              stop_criterion=0.01,
                                              max_iteration_number=9,
                                              num_groups=2,
-                                             remove_traj_files=True,
                                              )
 
     response = run_locally(
