@@ -353,7 +353,6 @@ def mock_do_rss_iterations(input=None,
                            force_tol: float = 0.1,
                            stress_tol: float = 0.1,
                            Hookean_repul: bool = False,
-                           remove_traj_files: bool = True,
                            num_processes_rss: int = 4,
                            device: str = "cpu",
                            stop_criterion: float = 0.01,
@@ -397,7 +396,6 @@ def mock_do_rss_iterations(input=None,
                                   force_tol=force_tol,
                                   stress_tol=stress_tol,
                                   hookean_repul=Hookean_repul,
-                                  remove_traj_files=remove_traj_files,
                                   num_processes_rss=num_processes_rss,
                                   device=device)
         job4 = sample_data(selection_method=selection_method2,
@@ -431,12 +429,12 @@ def mock_do_rss_iterations_multi_jobs(input=None,
                                       force_tol: float = 0.1,
                                       stress_tol: float = 0.1,
                                       Hookean_repul: bool = False,
-                                      remove_traj_files: bool = True,
                                       num_processes_rss: int = 4,
                                       device: str = "cpu",
                                       stop_criterion: float = 0.01,
                                       max_iteration_number: int = 9,
                                       num_groups: int = 2,
+                                      remove_traj_files: bool = True,
                                       **fit_kwargs, ):
     if input is None:
         input = {'test_error': None,
@@ -476,7 +474,6 @@ def mock_do_rss_iterations_multi_jobs(input=None,
                                  force_tol=force_tol,
                                  stress_tol=stress_tol,
                                  hookean_repul=Hookean_repul,
-                                 remove_traj_files=remove_traj_files,
                                  num_processes_rss=num_processes_rss,
                                  device=device,
                                  num_groups=num_groups, )
@@ -491,3 +488,4 @@ def mock_do_rss_iterations_multi_jobs(input=None,
         job_list = [job2, job3, job4]
 
         return Response(detour=job_list, output=job4.output)
+    
