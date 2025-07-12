@@ -160,7 +160,7 @@ def test_mace_fit_maker(test_dir, memory_jobstore, clean_dir):
 def test_mace_finetuning_maker(test_dir, memory_jobstore, clean_dir):
 
     # TODO: Replace the finetuning dataset with correct reference keys
-    # as per mace logs using energy_key 'energy', 'forces' and 'stress' is 
+    # as per mace logs using 'energy', 'forces' and 'stress' as ref keys is 
     # no longer safe when communicating between MACE and ASE
     
     database_dir = test_dir / "fitting/finetuning_dataset"
