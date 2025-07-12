@@ -3,7 +3,9 @@
 from pathlib import Path
 
 import numpy as np
+from ase.io import write
 from jobflow import job
+from pymatgen.io.ase import AseAtomsAdaptor
 
 from autoplex import MLIP_HYPERS
 from autoplex.fitting.common.utils import (
@@ -86,8 +88,6 @@ def machine_learning_fit(
         Additional keyword arguments for MLIP fitting.
     """
     if run_fits_on_different_cluster:
-        from ase.io import write
-        from pymatgen.io.ase import AseAtomsAdaptor
 
         adapter = AseAtomsAdaptor()
         for key, values in database_dict.items():
