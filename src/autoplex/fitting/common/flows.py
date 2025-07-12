@@ -9,6 +9,7 @@ from typing import Literal
 
 import ase.io
 from jobflow import Flow, Maker, job
+from pymatgen.io.ase import AseAtomsAdaptor
 
 from autoplex import MLIP_HYPERS
 from autoplex.fitting.common.jobs import machine_learning_fit
@@ -475,7 +476,6 @@ class DataPreprocessing(Maker):
 
         # TODO: add a database to MongoDB besides just the path
         if self.run_fits_on_different_cluster:
-            from pymatgen.io.ase import AseAtomsAdaptor
 
             adapter = AseAtomsAdaptor()
 

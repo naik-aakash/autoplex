@@ -389,10 +389,10 @@ def process_rss(
         pot = CustomPotential(args_str=gap_control, param_filename=gap_label)
 
     elif mlip_type == "J-ACE":
-        from ase.calculators.lammpslib import LAMMPSlib
+        from ase.calculators.lammpslib import LAMMPSlib  # noqa
 
         try:
-            from lammps import lammps
+            from lammps import lammps  # noqa
 
             lmp = lammps()
             if "ML-PACE" not in lmp.installed_packages:
