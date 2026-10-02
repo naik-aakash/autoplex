@@ -1,3 +1,0 @@
-model currently used is downloaded from huggingface repo: materialyze/M3GNet-PES-MatPES-PBE-2025.2
-
-Commit hash: 8414b23e68b173d6e36271e4366ee3717364051c
